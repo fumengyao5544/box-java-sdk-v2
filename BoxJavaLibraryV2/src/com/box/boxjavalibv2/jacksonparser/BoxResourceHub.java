@@ -14,6 +14,7 @@ import com.box.boxjavalibv2.dao.BoxOAuthToken;
 import com.box.boxjavalibv2.dao.BoxPreview;
 import com.box.boxjavalibv2.dao.BoxRealTimeServer;
 import com.box.boxjavalibv2.dao.BoxResourceType;
+import com.box.boxjavalibv2.dao.BoxServerError;
 import com.box.boxjavalibv2.dao.BoxTypedObject;
 import com.box.boxjavalibv2.dao.BoxUser;
 import com.box.boxjavalibv2.dao.BoxWebLink;
@@ -76,6 +77,8 @@ public class BoxResourceHub implements IBoxResourceHub {
                 return BoxRealTimeServer.class;
             case LOCK:
                 return BoxLock.class;
+            case ERROR:
+                return BoxServerError.class;
             case ITEMS:
             case FILES:
             case USERS:
