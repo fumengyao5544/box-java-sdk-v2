@@ -28,8 +28,8 @@ public class BoxFolderTest {
         String uploadEmailString = fromParcel.getFolderUploadEmail().toJSONString(new ObjectMapper());
         String[] parts = uploadEmailString.split(",");
         Assert.assertEquals(2, parts.length);
-        Assert.assertTrue(emailJson.contains(parts[0]));
-        Assert.assertTrue(emailJson.contains(parts[1]));
+        Assert.assertTrue(emailJson.contains(parts[0].replace("{", "").replace("}", "")));
+        Assert.assertTrue(emailJson.contains(parts[1].replace("{", "").replace("}", "")));
         Assert.assertEquals(false, (boolean) fromParcel.hasCollaborations());
     }
 }
