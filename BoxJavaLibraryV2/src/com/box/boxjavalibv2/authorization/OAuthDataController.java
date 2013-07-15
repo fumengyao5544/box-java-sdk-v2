@@ -38,6 +38,8 @@ public class OAuthDataController implements IAuthDataController {
 
     private volatile boolean locked = false;
 
+    private OAuthRefreshListener refreshListener;
+
     /**
      * Constructor.
      * 
@@ -268,6 +270,10 @@ public class OAuthDataController implements IAuthDataController {
                 (BoxOAuthRequestObject) BoxOAuthRequestObject.refreshOAuthRequestObject(mOAuthToken.getRefreshToken(), mClientId, mClientSecret)
                     .addQueryParam("device_id", mDeviceId).addQueryParam("device_name", mDeviceName));
             setTokenState(OAuthTokenState.AVAILABLE);
+            if (refreshListener != null) {
+                refreshListener.onRefresh(mOAuthToken);
+            }
+
             unlock();
         }
         catch (Exception e) {
@@ -286,6 +292,10 @@ public class OAuthDataController implements IAuthDataController {
         catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public void addOAuthRefreshListener(OAuthRefreshListener listener) {
+        this.refreshListener = listener;
     }
 
 }

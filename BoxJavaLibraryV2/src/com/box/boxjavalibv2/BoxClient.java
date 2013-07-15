@@ -5,6 +5,7 @@ import org.apache.commons.lang.NotImplementedException;
 import com.box.boxjavalibv2.authorization.OAuthAuthorization;
 import com.box.boxjavalibv2.authorization.OAuthDataController;
 import com.box.boxjavalibv2.authorization.OAuthDataController.OAuthTokenState;
+import com.box.boxjavalibv2.authorization.OAuthRefreshListener;
 import com.box.boxjavalibv2.authorization.SharedLinkAuthorization;
 import com.box.boxjavalibv2.dao.BoxBase;
 import com.box.boxjavalibv2.dao.BoxOAuthToken;
@@ -114,6 +115,10 @@ public class BoxClient extends BoxBase implements IAuthFlowListener {
      */
     public OAuthDataController getOAuthDataController() {
         return (OAuthDataController) authController;
+    }
+
+    public void addOAuthRefreshListener(OAuthRefreshListener listener) {
+        getOAuthDataController().addOAuthRefreshListener(listener);
     }
 
     /**
