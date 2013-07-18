@@ -1,26 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project default="debug" name="BoxJavaLibraryExtendedV2">
     <property name="debuglevel" value="source,lines,vars"/>
-    
-	<path id="BoxJavaLibraryV2.debug.classpath">
+    <path id="BoxJavaLibraryV2.debug.classpath">
         <pathelement location="bin/debug"/>
         <pathelement location="bin/test"/>
         <fileset dir="libs" includes="*.jar"/>
     </path>
-	
     <path id="BoxJavaLibraryV2.release.classpath">
         <pathelement location="bin/release"/>
         <fileset dir="libs" includes="*.jar"/>
     </path>
-    
-	
-	<target name="clean" description="Removes any built files.">
+    <target name="clean" description="Removes any built files.">
         <delete dir="bin"/>
         <delete dir="dist"/>
         <delete dir="reports"/>
     </target>
-    
-	<target name="debug" description="Performs a debug build.">
+    <target name="debug" description="Performs a debug build.">
         <mkdir dir="bin/debug"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin/debug" includeantruntime="false">
             <src path="src"/>
@@ -28,35 +23,15 @@
         </javac>
         <jar destfile="dist/debug/BoxJavaLibraryV2.jar" basedir="bin/debug"/>
     </target>
-    
-	<target name="release" description="Performs a release build.">
+    <target name="release" description="Performs a release build.">
         <mkdir dir="bin/release"/>
         <javac debug="false" destdir="bin/release" includeantruntime="false">
             <src path="src"/>
             <classpath refid="BoxJavaLibraryV2.release.classpath"/>
         </javac>
-        <jar destfile="dist/release/BoxJavaLibraryV2.jar" basedir="bin/release">
-			<zipfileset src="libs/cglib-nodep-2.2.2.jar" includes="**/*.class"/>
-			<!--Don't pack jars that have duplicates in BoxAndroidLibrary-->
-			<!--<zipfileset src="libs/commons-codec-1.6.jar" includes="**/*.class"/>-->
-			<zipfileset src="libs/commons-io-2.3.jar" includes="**/*.class"/>
-			<zipfileset src="libs/commons-lang-2.6.jar" includes="**/*.class"/>
-			<zipfileset src="libs/commons-logging-1.1.1.jar" includes="**/*.class"/>
-			<zipfileset src="libs/easymock-3.1.jar" includes="**/*.class"/>
-			<!--<zipfileset src="libs/jackson-annotations-2.0.0.jar" includes="**/*.class"/>-->
-			<!--<zipfileset src="libs/jackson-core-2-1.0.0.jar" includes="**/*.class"/>-->
-			<zipfileset src="libs/jackson-databind-2-1.0.0.jar" includes="**/*.class"/>
-			<zipfileset src="libs/powermock-easymock-1.4.12-full.jar" includes="**/*.class"/>
-			<!--<zipfileset src="libs/robolectric-1.2-20121030.213744-165-jar-with-dependencies.jar" includes="**/*.class"/> too much duplicates-->
-			<!--<zipfileset src="libs/httpmime-4.2.5.jar" includes="**/*.class"/>-->
-			<!--<zipfileset src="libs/httpclient-4.2.5.jar" includes="**/*.class"/>-->
-			<!--<zipfileset src="libs/httpclient-cache-4.2.5.jar" includes="**/*.class"/>-->
-			<!--<zipfileset src="libs/httpcore-4.2.4.jar" includes="**/*.class"/>-->
-			<!--<zipfileset src="libs/junit-4.8.2.jar" includes="**/*.class"/>-->
-		</jar>
+        <jar destfile="dist/release/BoxJavaLibraryV2.jar" basedir="bin/release"/>
     </target>
-    
-	<target name="test" depends="debug" description="Performs a debug build and then runs tests.">
+    <target name="test" depends="debug" description="Performs a debug build and then runs tests.">
         <mkdir dir="reports"/>
         <mkdir dir="bin/test"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin/test" includeantruntime="false">
@@ -76,5 +51,4 @@
         </junitreport>
         <move file="reports/junit-noframes.html" tofile="reports/Report.html"/>
     </target>
-	
 </project>
