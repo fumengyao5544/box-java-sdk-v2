@@ -16,10 +16,11 @@
 	
 	<target name="clean" description="Removes any built files.">
         <delete dir="bin"/>
-        <delete dir="dist"/>
+		<delete dir="dist"/>
         <delete dir="reports"/>
     </target>
     
+	
 	<target name="debug" description="Performs a debug build.">
         <mkdir dir="bin/debug"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin/debug" includeantruntime="false">
@@ -29,6 +30,7 @@
         <jar destfile="dist/debug/BoxJavaLibraryV2.jar" basedir="bin/debug"/>
     </target>
     
+	
 	<target name="release" description="Performs a release build.">
         <mkdir dir="bin/release"/>
         <javac debug="false" destdir="bin/release" includeantruntime="false">
@@ -37,14 +39,13 @@
         </javac>
         <jar destfile="dist/release/BoxJavaLibraryV2.jar" basedir="bin/release">
 			<zipfileset src="libs/cglib-nodep-2.2.2.jar" includes="**/*.class"/>
-			<!--Don't pack jars that have duplicates in BoxAndroidLibrary-->
-			<!--<zipfileset src="libs/commons-codec-1.6.jar" includes="**/*.class"/>-->
+			<zipfileset src="libs/commons-codec-1.6.jar" includes="**/*.class"/>
 			<zipfileset src="libs/commons-io-2.3.jar" includes="**/*.class"/>
 			<zipfileset src="libs/commons-lang-2.6.jar" includes="**/*.class"/>
 			<zipfileset src="libs/commons-logging-1.1.1.jar" includes="**/*.class"/>
 			<zipfileset src="libs/easymock-3.1.jar" includes="**/*.class"/>
-			<!--<zipfileset src="libs/jackson-annotations-2.0.0.jar" includes="**/*.class"/>-->
-			<!--<zipfileset src="libs/jackson-core-2-1.0.0.jar" includes="**/*.class"/>-->
+			<zipfileset src="libs/jackson-annotations-2.0.0.jar" includes="**/*.class"/>
+			<zipfileset src="libs/jackson-core-2-1.0.0.jar" includes="**/*.class"/>
 			<zipfileset src="libs/jackson-databind-2-1.0.0.jar" includes="**/*.class"/>
 			<zipfileset src="libs/powermock-easymock-1.4.12-full.jar" includes="**/*.class"/>
 			<!--<zipfileset src="libs/robolectric-1.2-20121030.213744-165-jar-with-dependencies.jar" includes="**/*.class"/> too much duplicates-->
@@ -56,6 +57,7 @@
 		</jar>
     </target>
     
+	
 	<target name="test" depends="debug" description="Performs a debug build and then runs tests.">
         <mkdir dir="reports"/>
         <mkdir dir="bin/test"/>
