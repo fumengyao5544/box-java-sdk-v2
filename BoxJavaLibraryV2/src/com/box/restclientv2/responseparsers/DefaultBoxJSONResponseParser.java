@@ -1,7 +1,6 @@
 package com.box.restclientv2.responseparsers;
 
 import java.io.InputStream;
-import java.io.StringWriter;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
@@ -91,11 +90,7 @@ public class DefaultBoxJSONResponseParser implements IBoxResponseParser {
 
         JsonFactory jsonFactory = new JsonFactory();
         try {
-            // TODO: this is for debug purpose only, should let JsonParser take InputStream directly.
-            StringWriter writer = new StringWriter();
-            IOUtils.copy(in, writer);
-            String theString = writer.toString();
-            JsonParser jp = jsonFactory.createJsonParser(theString);
+            JsonParser jp = jsonFactory.createJsonParser(in);
             return mObjectMapper.readValue(jp, objectClass);
         }
         catch (Exception e) {
