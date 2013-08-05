@@ -52,10 +52,7 @@ You can find a hello world example [here][hello-world].
 
 ### Authenticate
 
-Authenticate the client with OAuth. The SDK does not currently provide an
-authentication UI out of the box.  You can use your own UI to get the
-authentication code. After you have auth code, you can use the SDK OAuthManager
-to get a BoxOAuthToken:
+Authenticate the client with OAuth. For more details about the authentication flow(UI), please see the Authentication section.
 
 ```java
 boxClient.authenticate(boxOAuthToken);
@@ -168,8 +165,12 @@ BoxClient client = new BoxClient(clientId, clientSecret) {
 ```
 
 
-Known Issues
+Authentication
 ------------
-The SDK does not currently provide an OAuth UI.
+The SDK provides an OAuth UI using javafx, this is a seperate java project in our github due to the fact that this UI requires javafx sdk and not everybody wants it.
+To install javafx, you can either follow [javafx instruction](http://www.oracle.com/technetwork/java/javafx/overview/index.html) or install the [javafx eclipse plugin](http://www.eclipse.org/efxclipse/install.html)
+
+You can find a sample using this oauth UI [here](https://github.com/box/box-java-sdk-v2/tree/master/BoxJavaLibraryV2/BoxJavaFxOAuth/src/com/box/boxjavalibv2/javafxoauth/sample/SampleOAuthCaller.java). One thing to pay extra attention is that the call backs in the IAuthFlowListener() will all run on javafx thread, they cannot trigger java swing data change directly, the trigger need to be done in java swing thread. In the sample, this is done by SwingUtilities.invokeLater(runnable) method.
+
 
 [hello-world]: https://github.com/box/box-java-sdk-private/wiki/HelloWorld
