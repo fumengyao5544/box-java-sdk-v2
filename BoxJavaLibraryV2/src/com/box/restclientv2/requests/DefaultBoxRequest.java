@@ -49,7 +49,7 @@ public class DefaultBoxRequest implements IBoxRequest {
     /** REST method. */
     private final RestMethod mRestMethod;
     /** Endpoint uri. */
-    private final String uri;
+    private final String uriPath;
     /** Query parameters. */
     private final HashMap<String, String> queryParams = new HashMap<String, String>();
     /** Headers. */
@@ -68,8 +68,8 @@ public class DefaultBoxRequest implements IBoxRequest {
      *            config
      * @param objectMapper
      *            object mapper
-     * @param theUri
-     *            endpoint uri
+     * @param uriPath
+     *            e.g. /folders/93285/items
      * @param restMethod
      *            REST method
      * @param requestObject
@@ -77,11 +77,11 @@ public class DefaultBoxRequest implements IBoxRequest {
      * @throws BoxRestException
      *             exception
      */
-    public DefaultBoxRequest(final IBoxConfig config, final ObjectMapper objectMapper, final String theUri, final RestMethod restMethod,
+    public DefaultBoxRequest(final IBoxConfig config, final ObjectMapper objectMapper, final String uriPath, final RestMethod restMethod,
         final BoxDefaultRequestObject requestObject) throws BoxRestException {
         this.mConfig = config;
         this.mRestMethod = restMethod;
-        this.uri = theUri;
+        this.uriPath = uriPath;
         if (requestObject != null) {
             requestObject.setObjectMapper(objectMapper);
             setEntity(requestObject.getEntity());
@@ -235,9 +235,10 @@ public class DefaultBoxRequest implements IBoxRequest {
         rawRequest = constructHttpUriRequest();
         HttpClientURIBuilder ub;
         try {
-            ub = new HttpClientURIBuilder(getApiUrlPath().concat(uri));
+            ub = new HttpClientURIBuilder();
             ub.setHost(getAuthority());
             ub.setScheme(getScheme());
+            ub.setPath(getApiUrlPath().concat(uriPath).replaceAll("/{2,}", "/"));
             for (Map.Entry<String, String> entry : getQueryParams().entrySet()) {
                 ub.addParameter(entry.getKey(), StringUtils.defaultIfEmpty(entry.getValue(), ""));
             }
