@@ -128,6 +128,28 @@ BoxFileRequestObject requestObj =
 boxClient.deleteFile(fileId, requestObj);
 ```
 
+### Configure raw httpclient (e.g., set proxy)
+You need to override the createRestClient() method in BoxClient so that it returns a configured rest client.
+```java
+BoxClient client = new BoxClient(clientId, clientSecret) {
+    @Override
+    public IBoxRESTClient createRestClient() {
+        return new BoxRESTClient() {
+            @Override
+            public HttpClient getRawHttpClient() {
+                HttpClient client = super.getRawHttpClient();
+                // Now do the configure settings.
+                HttpHost proxy = new HttpHost("{proxy ip/url}",{proxy port}, "{proxy scheme, e.g. http}";
+                client.getParams().setParameter(ConnRouteNames.DEFAULT_PROXY, proxy);
+                return client; 
+            }
+        }
+    }
+};
+
+```
+
+
 Known Issues
 ------------
 The SDK does not currently provide an OAuth UI.

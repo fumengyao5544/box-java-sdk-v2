@@ -1,6 +1,7 @@
 package com.box.restclientv2;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
 
@@ -16,6 +17,10 @@ import com.box.restclientv2.responses.DefaultBoxResponse;
  */
 public class BoxBasicRestClient implements IBoxRESTClient {
 
+    public HttpClient getRawHttpClient() {
+        return new DefaultHttpClient();
+    }
+
     /**
      * Constructor.
      */
@@ -28,7 +33,7 @@ public class BoxBasicRestClient implements IBoxRESTClient {
         HttpResponse response;
 
         try {
-            response = (new DefaultHttpClient()).execute(httpRequest);
+            response = getRawHttpClient().execute(httpRequest);
         }
         catch (Exception e) {
             throw new BoxRestException(e);
