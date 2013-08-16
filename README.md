@@ -127,7 +127,7 @@ BoxFile bFile = boxClient.getFilesManager().uploadFile(requestObj);
 BoxFileUploadRequestObject requestObj = 
 	BoxFileUploadRequestObject.uploadFileRequestObject(parent, "name", file)
 		.setListener(listener));
-List<BoxFile> bFiles = boxClient.getFilesManager().uploadFiles(requestObj);
+BoxFile bFile = boxClient.getFilesManager().uploadFile(requestObj);
 ```
 
 ### Download a File
