@@ -61,6 +61,24 @@ to get a BoxOAuthToken:
 boxClient.authenticate(boxOAuthToken);
 ```
 
+Our sdk auto refreshes OAuth access token when it expires. You will want to listen to the refresh events and update your stored token after refreshing.
+```java
+boxClient.addOAuthRefreshListener(OAuthRefreshListener listener) {
+    new OAuthRefreshListener() {
+        @Override
+        public void onRefresh(IAuthData newAuthData) {
+            // TODO: save the auth data.
+        }						       
+    }
+}
+```
+
+After you exit the app and return back, you can use the stored oauth data to authenticate:
+```java
+boxClient.authenticate(loadStoredAuthData);
+``` 
+
+
 For more details please see the [hello world example][hello-world].
 
 ### Get Default File Info
@@ -100,7 +118,7 @@ BoxCollection collection =
 ```java
 BoxFileUploadRequestObject requestObj = 
 	BoxFileUploadRequestObject.uploadFileRequestObject(parent, "name", file);
-List<BoxFile> bFiles = boxClient.getFilesManager().uploadFiles(requestObj);
+BoxFile bFile = boxClient.getFilesManager().uploadFile(requestObj);
 ```
 
 ### Upload a File with a Progress Listener
