@@ -183,8 +183,12 @@ public class BoxFileUploadRequestObject extends BoxDefaultRequestObject {
         try {
             me.addPart(Constants.FOLDER_ID, new StringBody(parentId));
             String date = ISO8601DateParser.toString(new Date());
-            me.addPart(KEY_CONTENT_CREATED_AT, new StringBody(date));
-            me.addPart(KEY_CONTENT_MODIFIED_AT, new StringBody(date));
+            if (me.getPart(KEY_CONTENT_CREATED_AT) == null) {
+                me.addPart(KEY_CONTENT_CREATED_AT, new StringBody(date));
+            }
+            if (me.getPart(KEY_CONTENT_MODIFIED_AT) == null) {
+                me.addPart(KEY_CONTENT_MODIFIED_AT, new StringBody(date));
+            }
         }
         catch (UnsupportedEncodingException e1) {
             throw new BoxRestException(e1);
@@ -202,8 +206,12 @@ public class BoxFileUploadRequestObject extends BoxDefaultRequestObject {
             me.addPart(KEY_FILE_NAME, new FileBody(file, KEY_FILE_NAME, "", CharEncoding.UTF_8));
             me.addPart(METADATA, getMetadataBody(parentId, name));
             String date = ISO8601DateParser.toString(new Date(file.lastModified()));
-            me.addPart(KEY_CONTENT_CREATED_AT, new StringBody(date));
-            me.addPart(KEY_CONTENT_MODIFIED_AT, new StringBody(date));
+            if (me.getPart(KEY_CONTENT_CREATED_AT) == null) {
+                me.addPart(KEY_CONTENT_CREATED_AT, new StringBody(date));
+            }
+            if (me.getPart(KEY_CONTENT_MODIFIED_AT) == null) {
+                me.addPart(KEY_CONTENT_MODIFIED_AT, new StringBody(date));
+            }
         }
         catch (UnsupportedEncodingException e) {
             throw new BoxRestException(e);
@@ -225,12 +233,28 @@ public class BoxFileUploadRequestObject extends BoxDefaultRequestObject {
     private static MultipartEntityWithProgressListener getNewVersionMultipartEntity(final String name, final File file) {
         MultipartEntityWithProgressListener me = new MultipartEntityWithProgressListener(HttpMultipartMode.BROWSER_COMPATIBLE);
         me.addPart(name, new FileBody(file, name, "", CharEncoding.UTF_8));
+
+        if (me.getPart(KEY_CONTENT_MODIFIED_AT) == null) {
+            try {
+                me.addPart(KEY_CONTENT_MODIFIED_AT, new StringBody(ISO8601DateParser.toString(new Date(file.lastModified()))));
+            }
+            catch (UnsupportedEncodingException e) {
+            }
+        }
         return me;
     }
 
     private static MultipartEntityWithProgressListener getNewVersionMultipartEntity(final String name, final InputStream inputStream) {
         MultipartEntityWithProgressListener me = new MultipartEntityWithProgressListener(HttpMultipartMode.BROWSER_COMPATIBLE);
         me.addPart(name, new InputStreamBody(inputStream, name));
+
+        if (me.getPart(KEY_CONTENT_MODIFIED_AT) == null) {
+            try {
+                me.addPart(KEY_CONTENT_MODIFIED_AT, new StringBody(ISO8601DateParser.toString(new Date())));
+            }
+            catch (UnsupportedEncodingException e) {
+            }
+        }
         return me;
     }
 }

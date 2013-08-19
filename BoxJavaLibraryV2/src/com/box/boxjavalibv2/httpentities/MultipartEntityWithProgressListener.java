@@ -53,6 +53,10 @@ public class MultipartEntityWithProgressListener extends MultipartEntity {
         parts.put(name, contentBody);
     }
 
+    public ContentBody getPart(String name) {
+        return parts.get(name);
+    }
+
     /**
      * Method to put all parts in to the multipart entity.
      * 
