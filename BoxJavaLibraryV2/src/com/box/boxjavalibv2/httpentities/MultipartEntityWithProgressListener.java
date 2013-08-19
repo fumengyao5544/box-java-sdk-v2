@@ -4,9 +4,12 @@ import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.ContentBody;
 
 import com.box.boxjavalibv2.interfaces.IFileTransferListener;
 
@@ -31,6 +34,8 @@ public class MultipartEntityWithProgressListener extends MultipartEntity {
      */
     private CountingOutputStream mCountingOutputStream;
 
+    private final HashMap<String, ContentBody> parts = new HashMap<String, ContentBody>();
+
     /**
      * base constructor.
      * 
@@ -41,6 +46,23 @@ public class MultipartEntityWithProgressListener extends MultipartEntity {
      */
     public MultipartEntityWithProgressListener(final HttpMultipartMode mode) {
         super(mode);
+    }
+
+    @Override
+    public void addPart(String name, ContentBody contentBody) {
+        parts.put(name, contentBody);
+    }
+
+    /**
+     * Method to put all parts in to the multipart entity.
+     * 
+     * @return
+     * @throws ParseException
+     */
+    public void prepareParts() {
+        for (Map.Entry<String, ContentBody> entry : parts.entrySet()) {
+            super.addPart(entry.getKey(), entry.getValue());
+        }
     }
 
     /**

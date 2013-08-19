@@ -7,9 +7,12 @@ package com.box.boxjavalibv2.utils;
  * implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * ISO 8601 date parsing utility. Designed for parsing the ISO subset used in Dublin Core, RSS 1.0, and Atom.
@@ -83,6 +86,19 @@ public class ISO8601DateParser {
 
         return df.parse(input);
 
+    }
+
+    /**
+     * Same as parse method but does not throws. In case input date string cannot be parsed, null is returned.
+     */
+    public static Date parseSilently(String input) {
+        try {
+            Date date = StringUtils.isEmpty(input) ? null : parse(input);
+            return date;
+        }
+        catch (ParseException e) {
+            return null;
+        }
     }
 
     public static String toString(Date date) {

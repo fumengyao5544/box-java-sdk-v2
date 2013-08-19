@@ -56,7 +56,7 @@ public class BoxSharedLinkRequestObject extends BoxDefaultRequestObject {
      * @throws ParseException
      */
     public Date getUnshared_at() throws ParseException {
-        return ISO8601DateParser.parse((String) get(BoxSharedLink.FIELD_UNSHARED_AT));
+        return ISO8601DateParser.parseSilently((String) get(BoxSharedLink.FIELD_UNSHARED_AT));
     }
 
     /**
