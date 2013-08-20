@@ -171,10 +171,6 @@ public class JavaFxOAuthFlow implements IAuthFlowUI {
             }
         };
         t.start();
-
-        while (t.isAlive()) {
-        }
-
     }
 
     /**
