@@ -60,14 +60,12 @@ boxClient.authenticate(boxOAuthToken);
 
 Our sdk auto refreshes OAuth access token when it expires. You will want to listen to the refresh events and update your stored token after refreshing.
 ```java
-boxClient.addOAuthRefreshListener(OAuthRefreshListener listener) {
-    new OAuthRefreshListener() {
+boxClient.addOAuthRefreshListener(new OAuthRefreshListener() {
         @Override
         public void onRefresh(IAuthData newAuthData) {
             // TODO: save the auth data.
-        }						       
-    }
-}
+        }
+});
 ```
 
 After you exit the app and return back, you can use the stored oauth data to authenticate:
