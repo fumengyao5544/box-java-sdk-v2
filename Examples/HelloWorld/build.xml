@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="build" name="HelloWorld">
+    <property name="debuglevel" value="source,lines,vars"/>
+
+    <path id="HelloWorld.classpath">
+        <pathelement location="../../BoxJavaLibraryV2/bin/debug"/>
+        <fileset dir="../../BoxJavaLibraryV2/libs" includes="*.jar"/>
+    </path>
+
+    <target name="clean" description="Removes any built files.">
+        <delete dir="bin"/>
+    </target>
+
+    <target name="dobuild" description="Performs a build.">
+        <ant dir="../../BoxJavaLibraryV2" antfile="build.xml" target="debug"/>
+        <mkdir dir="bin"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false">
+            <src path="src"/>
+            <classpath refid="HelloWorld.classpath"/>
+        </javac>
+    </target>
+
+    <target name="build" depends="dobuild" description="Performs a build.">
+        <echo message="To run the HelloWorld sample, do: ant run"/>
+    </target>
+
+    <target name="run" depends="dobuild" description="Builds and runs HelloWorld.">
+        <java classname="HelloWorld">
+            <classpath>
+                <pathelement path="bin"/>
+            </classpath>
+            <classpath refid="HelloWorld.classpath"/>
+        </java>
+    </target>
+</project>
