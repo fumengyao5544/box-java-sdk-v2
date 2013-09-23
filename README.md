@@ -138,7 +138,7 @@ Delete a file, but only if the etag matches.
 ```java
 BoxFileRequestObject requestObj =
 	BoxFileRequestObject.deleteFileRequestObject().setIfMatch(etag);
-boxClient.deleteFile(fileId, requestObj);
+boxClient.getFilesManager().deleteFile(fileId, requestObj);
 ```
 
 ### Configure raw httpclient (e.g., set proxy)
