@@ -20,7 +20,7 @@ public class HelloWorld {
         if (key.equals("YOUR API KEY HERE")) {
             System.out.println("Before this sample app will work, you will need to change the");
             System.out.println("'key' and 'secret' values in the source code.");
-			return;
+            return;
         }
 
         String code = "";
